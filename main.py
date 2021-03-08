@@ -45,8 +45,14 @@ def crackFile(password):
             exit()
     except KeyboardInterrupt:
         exit()
-    except:
+    except IOError as e:
+        print(error + str(e))
+        exit(1)
+    except RuntimeError:
         pass
+    except Exception as e :
+    	print(error + 'Unknown error! '+str(e))
+
 
 
 def main():
@@ -92,7 +98,7 @@ def crackLoop():
                 + str(prettyPercent)
             )
             print(b, end="\r")
-
+    print(error + 'Could not find the correct password :( ')
 
 print(banner)
 main()
