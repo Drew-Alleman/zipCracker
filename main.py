@@ -1,7 +1,6 @@
 from colorama import Fore, Style
 from zipfile import ZipFile
 import argparse
-import sys
 
 parser = argparse.ArgumentParser(description="Zip Cracker Tool")
 parser.add_argument("-w", "--wordlist", help="password list")
@@ -43,14 +42,12 @@ def crackFile(password):
         with ZipFile(args.file) as zf:
             zf.extractall(pwd=password)
             print("\n\n" + info + password.decode())
-            sys.exit(0)
-    except KeyboardInterrupt:
-        sys.exit()
+            return True
     except IOError as e:
         print(error + str(e))
-        sys.exit()
+        exit()
     except:
-    	pass
+    	return False
 
 
 
@@ -64,7 +61,7 @@ def main():
             print(warning + "Wordlist contains less than 1000 words")
     except IOError as e:
         print(error + str(e))
-        sys.exit()
+        exit()
 
     crackLoop()
 
@@ -75,7 +72,8 @@ def crackLoop():
     with open(args.wordlist, "rb") as wordListFile:
         for word in wordListFile:
             word = word.strip()
-            crackFile(word)
+            if crackFile(word):
+            	exit()
             count += 1
             percent = count / WordCount
             i = int(percent * 10)
