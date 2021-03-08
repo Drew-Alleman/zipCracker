@@ -48,10 +48,8 @@ def crackFile(password):
     except IOError as e:
         print(error + str(e))
         exit(1)
-    except RuntimeError:
-        pass
-    except Exception as e :
-    	print(error + 'Unknown error! '+str(e))
+    except:
+    	pass
 
 
 
